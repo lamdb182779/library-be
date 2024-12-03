@@ -12,6 +12,7 @@
   "dependencies": {
     "@sequelize/postgres": "^7.0.0-alpha.43",
     "body-parser": "^1.20.3",
+    "connect-redis": "^8.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
