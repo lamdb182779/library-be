@@ -12,7 +12,7 @@ const DB_PORT = process.env.DB_PORT
 
 const sequelize = new Sequelize(DB_DATABASE, DB_USERNAME, DB_PASSWORD, {
     host: DB_HOST,
-    dialect: DB_CONNECTION,
+    dialect: 'postgres',
     port: DB_PORT,
     dialectOptions: {
         ssl: {
