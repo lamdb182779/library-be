@@ -30,7 +30,6 @@ const sess = (app) => {
         saveUninitialized: false,
         cookie: {
             secure: false,
-            sameSite: "lax"
         },
         store: myStore
     }))
