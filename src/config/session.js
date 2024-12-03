@@ -28,6 +28,7 @@ const sess = (app) => {
         saveUninitialized: false,
         cookie: {
             secure: false,
+            sameSite: "strict"
         },
         store: myStore
     }))
