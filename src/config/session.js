@@ -2,18 +2,25 @@ require("dotenv").config()
 
 const passport = require("passport")
 const session = require("express-session")
-const { RedisStore } = require("connect-redis")
-const { createClient } = require('redis');
+const Sequelize = require('sequelize');
+
 
 const SESSION_SECRET = process.env.SESSION_SECRET
-const REDIS_HOST = process.env.REDIS_HOST
-const REDIS_PORT = process.env.REDIS_PORT
-
-const redisClient = createClient();
-
-let redisStore = new RedisStore({ host: REDIS_HOST, port: REDIS_PORT, client: redisClient })
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
+const sequelize = new Sequelize(`${process.env.DB_URL}?sslmode=no-verify`, {
+    dialect: 'postgres',
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false,
+        },
+    },
+})
 
 const sess = (app) => {
+    const myStore = new SequelizeStore({
+        db: sequelize,
+    })
 
     app.use(session({
         secret: SESSION_SECRET,
@@ -22,8 +29,10 @@ const sess = (app) => {
         cookie: {
             secure: false,
         },
-        store: redisStore
+        store: myStore
     }))
+
+    myStore.sync()
 
     app.use(passport.initialize())
     app.use(passport.session())
