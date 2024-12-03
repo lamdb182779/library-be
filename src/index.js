@@ -12,6 +12,8 @@ const sess = require("./config/session.js")
 const cron = require("node-cron")
 const { mailSchedule } = require("./controllers/schedule.js")
 
+app.set('trust proxy', 1);
+
 app.use(cors({
     credentials: true,
     origin: true
