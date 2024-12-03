@@ -20,6 +20,8 @@ const sequelize = new Sequelize(`${process.env.DB_URL}?sslmode=no-verify`, {
 const sess = (app) => {
     const myStore = new SequelizeStore({
         db: sequelize,
+        checkExpirationInterval: 15 * 60 * 1000,
+        expiration: 24 * 60 * 60 * 1000
     })
 
     app.use(session({
@@ -28,7 +30,6 @@ const sess = (app) => {
         saveUninitialized: false,
         cookie: {
             secure: false,
-            sameSite: "strict"
         },
         store: myStore
     }))
