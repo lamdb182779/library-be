@@ -3,7 +3,6 @@ require("dotenv").config()
 const passport = require("passport")
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const db = require("../models")
-const { where } = require("sequelize")
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET

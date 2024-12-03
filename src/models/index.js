@@ -9,7 +9,15 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
-const sequelize = new Sequelize(`${process.env.DB_URL}?sslmode=no-verify`, config)
+const sequelize = new Sequelize(`${process.env.DB_URL}?sslmode=no-verify`, {
+  dialect: 'postgres',
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
+})
 
 fs
   .readdirSync(__dirname)
