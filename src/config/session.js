@@ -2,7 +2,7 @@ require("dotenv").config()
 
 const passport = require("passport")
 const session = require("express-session")
-const connect = require("connect-redis")
+const { RedisStore } = require("connect-redis")
 const { createClient } = require('redis');
 
 const SESSION_SECRET = process.env.SESSION_SECRET
@@ -10,7 +10,6 @@ const REDIS_HOST = process.env.REDIS_HOST
 const REDIS_PORT = process.env.REDIS_PORT
 
 const redisClient = createClient();
-const RedisStore = connect(session)
 
 let redisStore = new RedisStore({ host: REDIS_HOST, port: REDIS_PORT, client: redisClient })
 
