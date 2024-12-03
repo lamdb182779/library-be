@@ -5,14 +5,19 @@ const service = (route) => {
 
     router.get("/check-login", (req, res) => {
         if (req.user) {
+            console.log("log in");
+
             return res.status(200).json({
                 message: "Logged in!",
                 user: req.user
             })
         }
-        else return res.status(200).json({
-            message: "Not logged in!"
-        })
+        else {
+            console.log("log in");
+            return res.status(200).json({
+                message: "Not logged in!"
+            })
+        }
     })
 
     router.get("/logout", (req, res) => {
