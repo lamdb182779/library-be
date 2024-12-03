@@ -49,7 +49,7 @@ const sess = (app) => {
     });
 
     passport.deserializeUser(function (user, cb) {
-        console.log("check after");
+        console.log("check after", user);
         process.nextTick(function () {
             return cb(null, user);
         });
