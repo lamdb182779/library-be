@@ -2,15 +2,17 @@ require("dotenv").config()
 
 const passport = require("passport")
 const session = require("express-session")
-const RedisStore = require('connect-redis')(session);
-const redis = require('redis');
+const connect = require("connect-redis")
+const { createClient } = require('redis');
 
 const SESSION_SECRET = process.env.SESSION_SECRET
-const REDIS_URL = process.env.REDIS_URL
+const REDIS_HOST = process.env.REDIS_HOST
+const REDIS_PORT = process.env.REDIS_PORT
 
-const redisClient = redis.createClient({
-    url: REDIS_URL
-});
+const redisClient = createClient();
+const RedisStore = connect(session)
+
+let redisStore = new RedisStore({ host: REDIS_HOST, port: REDIS_PORT, client: redisClient })
 
 const sess = (app) => {
 
@@ -21,7 +23,7 @@ const sess = (app) => {
         cookie: {
             secure: false,
         },
-        store: new RedisStore({ client: redisClient })
+        store: redisStore
     }))
 
     app.use(passport.initialize())
